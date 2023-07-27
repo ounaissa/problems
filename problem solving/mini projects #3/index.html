@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <style>
+        body{
+            height : 5000px ;
+        }
+        .gallery{
+            display: grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap : 10px 0 ; 
+        }
+        .gallery > .all {
+            padding : 15px ; 
+            width : 50px; 
+            height : 50px ; 
+            color : white ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .control{
+            display : flex ; 
+            margin : auto ;
+            text-align: center;
+            justify-content: center;
+            margin-bottom : 10px ;
+        }
+        .control div{
+            background-color: #eee ;
+            padding : 10px 15px ;
+            margin-left : 5px; 
+        }
+        
+        
+        .serial {
+            width : 100px; 
+            background-color:  #eee ; 
+            padding : 20px ;
+            margin : 20px auto 0 ; 
+            text-align : center ; 
+            font-size : 22px ; 
+            font-weight : bold ; 
+            border-radius : 4px ; 
+            height :66.5px ;
+            user-select: none;
+        }
+        .genrate{
+            background-color : red ; 
+            display : block ;
+            margin : 20px auto ;
+            width : fit-content ; 
+            padding : 10px 20px ;
+            color :#fff ; 
+            font-weight : bold ; 
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .tabs{
+            display :flex ; 
+            list-style : none ; 
+            padding : 0 ; 
+            margin : 0 ; 
+        }
+        .tabs li {
+            padding : 10px ; 
+            background-color : #f6f4f4;
+             border-right : 1px solid white ; 
+             transition: 0.3s;
+             cursor: pointer;
+        }
+        .tabs li.active , 
+        .tabs li:hover {
+            background-color : #ddd ; 
+        }
+        .content {
+            background-color : #ddd;
+        }
+        .content > div{
+            padding : 20px ; 
+        }
+        .content > div:not(:first-child){
+            display : none ; 
+        }
+        .up{
+            position: fixed;
+            bottom: 10px;
+            right: -30px; 
+            color : white;
+            font-weight : bold ; 
+            font-size : 12px ;
+            padding : 5px ; 
+            border-radius : 4px ; 
+            cursor : pointer ;
+            transition :  0.2s;  
+        }
+        .up.show {
+            right : 10px;
+        }
+        .custmize{
+            background-color : #eee ; 
+            padding : 15px ; 
+            margin : 20px auto ; 
+            width : 200px;
+        }
+        .custmize div{
+            padding : 10px ;
+        }
+        .custmize label {
+            position: relative;
+            padding-left : 25px ; 
+        }
+        .custmize label:before  {
+            content : "" ; 
+        }
+        .custmize input[type="radio"]{
+           appearance: none;
+        }
+        .custmize div label:before{
+            content : "" ; 
+            width : 16px  ; 
+            height : 16px ; 
+            border : 1px solid #03a9f4 ; 
+            position : absolute ; 
+            left  : 0 ; 
+            top : 50% ; 
+            transform: translateY(-50%);
+            background-color : white ; 
+        }
+        .custmize div input[type="radio"]:not(:checked):hover + label:after,
+        .custmize div input[type="radio"]:focus + label:after{
+        
+            content: " ";
+            position: absolute;
+            background-color: #03a9f4;
+            width: 10px;
+            height: 10px;
+            left: 4px;
+            top : 4px;  
+        }
+        .custmize div input[type="radio"]:focus + label{
+            color : #03a9f4;
+        }
+        .custmize div input[type="radio"]:not(:checked):hover + label:after {
+            opacity : 0.2;
+        }
+        .product{
+            width : 400px; 
+            margin : 20px auto ; 
+            box-shadow: 0 0 10px #ddd;
+            padding : 20px ;
+            text-align : center ;
+            overflow: hidden;
+        }
+        .product .num{
+          background-color :  red ;
+            color : #fff ; 
+            width : 60px ; 
+            height : 60px ;
+            border-radius: 50px;
+            margin : auto ;
+            display : flex ; 
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            font-weight: bold;
+            transition: 1s;
+        } 
+        .product h3 {
+            margin : 15px 0; 
+            font-size : 26px ; 
+            transition: 0.6s ;
+        }
+        .product p {
+            line-height: 1.6;
+            transition: 0.6s ;
+            font-size : 18px ;
+        }
+        .product:hover .num{
+            box-shadow: 0 0 0 500px red;
+        }
+        .product:hover  p , 
+        .product:hover  h3{
+            color : white ; 
+        }
+        .shape{
+            width : 400px ; 
+            height : 200px; 
+            box-shadow: 0 0 10px #ddd;
+            background-color : white ; 
+            margin : 20px auto;
+            padding : 20px  0;
+            text-align: center;
+        }
+        .shape div{
+            background-color: #03a9f4;
+            color : white ; 
+            padding : 10px  ; 
+            position: relative;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 20px;
+        }
+
+    .shape .box-1{
+        width : 50% ; 
+        margin-bottom : 20px ;
+        left : -20px
+    }
+    .shape .box-1::before{
+        content : "" ; 
+        position: absolute ;
+        right : 0 ; 
+        top : -1px ;
+        height : 100% ; 
+        width : 5px ;
+        background-color: #034c6e;
+        transform: skewY(10deg);
+    }
+    .shape .box-1::after{
+        content: "";
+        background-color: #034c6e;
+        clip-path: polygon(0 0% , 100% 0% , 100% 100% );
+        width: 20px;
+        height: 15px;
+        position: absolute;
+        left: 0;
+        bottom: -15px;
+
+    }
+    .shape .box-2{
+        width: calc(100% + 20px);
+        left: -20px;
+    }
+
+    .shape .box-2::before,
+        .shape .box-2::after{
+            content : "" ; 
+        position : absolute;
+        width : 20px ; 
+        height : 15px ; 
+        background-color: #034c6e;
+        bottom : -15px ;
+
+        }
+    .shape .box-2::before{
+        clip-path: polygon(0 0% , 100% 0% , 100% 100% );
+        left: 0 ;
+    }
+    .shape .box-2::after{
+        clip-path: polygon(0% 100% , 0% 0% , 100% 0 );
+        right : 0 ;
+    }
+    .tooltip{
+        margin : auto ; 
+    }
+    .tooltip button {
+        background-color : #eee ; 
+        margin : 100px auto ; 
+        padding : 10px 20px ; 
+        display : block ; 
+        font-size : 40px; 
+        border : none ; 
+        position : relative ; 
+        cursor : pointer ; 
+        overflow: hidden;
+    } 
+    .tooltip button:focus {
+        outline: none;
+    }
+    .tooltip span {
+        background-color : #333 ; 
+        color :white ;
+        position : absolute ; 
+        left : 50% ; 
+        transform: translateX(-50%);
+        font-size : 12px ;
+        min-width : 260px ; 
+        padding : 10px 15px ; 
+        top :-60px ;
+        transition: 0.5s;
+        opacity: 0;
+    }
+    .tooltip span::before {
+        content: "";
+    
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid ;
+    border-color: #333 transparent transparent transparent;
+}
+.tooltip button:hover{
+    overflow: visible;
+}
+.tooltip button:hover > span {
+    opacity: 1;
+}
+[data-set="bottom"] span {
+    top: auto;
+    bottom : -60px ; 
+}
+[data-set="bottom"] span::before {
+    border-color: transparent  transparent #333 transparent;
+    bottom : auto ; 
+    top : -20px ;
+}
+.projects{
+    margin : 20px auto ; 
+    text-align: center;
+    font-weight : bold ; 
+    font-size : 40px ; 
+    width : fit-content ; 
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 1px #333 ;
+    position: relative; 
+}
+.projects::before{
+    content : attr(data-set) ; 
+    position :absolute;
+    left: 0 ; 
+    top : 0 ; 
+    -webkit-text-fill-color: #03a9f4;
+    transition: 0.5s;
+    width: 0;
+    overflow: hidden;
+
+}
+.projects:hover:before{
+    width : 100% ;
+}
+.dir{
+    background-color : #333 ;
+    padding : 80px ;
+} 
+.dir .link{
+    color : red ; 
+    text-decoration: none;
+    display: block;
+    border : 2px solid red; 
+    margin : 20px auto ; 
+    position : relative ; 
+    width : 180px ; 
+    height : 40px ; 
+    line-height : 36px;
+    text-align: center;
+    overflow: hidden ;
+}
+.dir .link::before{
+    content : attr(data-text) ; 
+    position :absolute ; 
+    left : 0 ; 
+    top : 0 ;
+    width : 100% ; 
+    color : inherit ; 
+    transform: translateX(-100%);
+    transition : 0.3s ; 
+}
+.dir .link span {
+    display : block ; 
+    transition : 0.3s ; 
+}
+.dir .link:hover::before {
+    transform : translateX(0)
+}
+.dir .link:hover span {
+    transform: translateX(100%);
+}
+    </style>
+    <h2 class="projects" data-set = "projects">projects</h2>
+    <div class="control">
+        <div  data-set ="all" class="active">All</div>
+        <div  data-set="web">Web</div>
+        <div  data-set="gra">Graphic</div>
+        <div  data-set="mark">markting</div>
+    </div>
+
+ <div class="gallery">
+     <div class="all web">web</div>
+     <div class="all web">web</div>
+    <div class="all gra">Graphic</div>
+    <div class="all gra">Graphic</div>
+    <div class="all mark">Markting</div>
+    <div class="all web">web</div>
+    <div class="all web">web</div>
+    <div class="all mark">Markting</div>
+    <div class="all mark">Markting</div>
+    <div class="all gra">Graphic</div>
+ </div>
+ <hr>
+ <div class="serial"></div>
+ <span class="genrate">Ganerate</span>
+
+ <div class="tabs">
+
+    <ul class="tabs-ul">
+        <li data-cont=".one"class="active">tab 1</li>
+        <li data-cont=".two">tab 2</li>
+        <li data-cont=".three">tab 3</li>
+    </ul>
+
+    <div class="content">
+        <div class="one">content 1 </div>
+        <div class="two">content 2 </div>
+        <div class="three">content 3 </div>
+    </div>
+
+ </div>
+ <hr>
+<div class="custmize">
+    <div>
+    <input type="radio" name="" id="#mac">
+    <label for="#mac">MAC</label>
+</div>
+<div>
+
+    <input type="radio" name="" id="#win">
+    <label for="#win">Windows</label>
+</div>
+    <div>
+
+    <input type="radio" name="" id="#lin">
+    <label for="#lin">linxus</label>
+</div>
+
+</div>
+<hr>
+<div class="product">
+    <div class="num">1</div>
+    <h3>product one </h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda vero inventore omnis quos corporis quaerat rerum aut commodi, odio aspernatur pariatur at sapiente modi deserunt quidem perspiciatis. Veniam, repellat sit!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda vero inventore omnis quos corporis quaerat rerum aut commodi, odio aspernatur pariatur at sapiente modi deserunt quidem perspiciatis. Veniam, repellat sit!
+    </p>
+</div>
+<hr>
+<div class="shape">
+    <div class="box-1">Nosa she</div>
+    <div class="box-2">Front End developer</div>
+</div>
+<hr>
+<div class="tooltip">
+    <button data-set="bottom">
+        Click
+        <span>My tooltip</span>
+    </button>
+</div>
+<hr>
+<div class="dir">
+    <a href="" class="link" data-text = "FrontEnd developer"><span>FrontEnd developer</span></a>
+</div>
+<span class="up">Up</span>
+    <script src="main.js"></script>
+</body>
+</html>

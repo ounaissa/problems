@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box;
+    padding : 0 ; 
+    margin : 0 ; 
+}
+body{
+    font-family: 'open sans';
+}
+.inputs{
+    padding: 10px;
+    background-color: #eee;
+    margin: 50px auto;
+    border-radius: 30px;
+    width: 400px;
+    text-align: center;
+    height: 55px;
+}
+.inputs input:first-child:focus{
+    outline: none;
+}
+.inputs input:first-child{
+    padding : 5px ; 
+    border-radius: 10px;
+    border: none;
+}
+.inputs input:last-child{
+    padding: 10px ; 
+    background-color: rebeccapurple ;
+    color : white;
+    border : none ; 
+    border-radius: 10px;
+}
+.tasks{
+    padding: 20px;
+    background-color: #eee;
+    width: 400px;
+    margin: auto;
+    border-radius: 10px;
+}
+.tasks .task{
+    background-color: white;
+    padding: 15px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    margin-bottom: 15px;
+}
+.task .del{
+    color :white; 
+    background-color: #f44336;
+    border-radius: 6px;
+    padding : 10px; 
+}
+.tasks .task:hover , 
+.tasks .task.done{
+    background-color: #e1e1e1;
+}
